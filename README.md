@@ -21,6 +21,12 @@ Back up differing configs (remote hosts, local laptops...)
       - [`/home/nd20983/.bashrc`](#homend20983bashrc)
       - [`/home/nd20983/.profile`](#homend20983profile)
     - [ssh configs](#ssh-configs-2)
+  - [on Macbook Pro](#on-macbook-pro)
+    - [basic configs](#basic-configs-3)
+      - [`/Users/nd20983/.zshrc`](#usersnd20983zshrc)
+      - [`/Users/nd20983/.zprofile`](#usersnd20983zprofile)
+    - [ssh configs](#ssh-configs-3)
+      - [`/Users/nd20983/.ssh/config`](#usersnd20983sshconfig)
 
 
 ## on Bridge machines (Eocene, Oligocene...)
@@ -535,6 +541,134 @@ Host eocene
     IdentityFile=~/.ssh/id_rsa
     ForwardX11=yes
     ForwardX11Trusted=yes
+```
+
+[back to content](#contents)
+
+
+## on Macbook Pro
+
+### basic configs
+
+#### `/Users/nd20983/.zshrc`
+
+```
+#######################################
+# 1. Environment Setup
+#######################################
+
+# Always set PATH cleanly
+# export PATH="$HOME/bin:$PATH"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Homebrew
+export PATH="$HOME/homebrew/bin:$PATH"
+# Colorize output if possible
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+
+# Safer defaults
+setopt autocd
+setopt correct
+setopt no_beep
+
+#######################################
+# 2. Prompt
+#######################################
+
+# Simple, clean, informative prompt
+PROMPT='%n@%m:%1~%# '
+
+# Example
+# username@hostname:/directory %
+
+
+#######################################
+# 3. Useful Aliases
+#######################################
+
+alias ll='ls -lrth'
+alias la='ls -la'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit -m'
+alias gp='git push'
+alias gd='git diff'
+
+#######################################
+# 4. Autocompletion
+#######################################
+
+autoload -Uz compinit
+compinit
+
+#######################################
+# 5. History Settings
+#######################################
+
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+# Share history across terminals
+setopt share_history
+
+#######################################
+# 6. Key Bindings
+#######################################
+
+# Enable Ctro+R to search history backwards
+bindkey "^R" history-incremental-search-backward
+
+#######################################
+# 7. Custom Functions (Optional)
+#######################################
+
+# Example: quick jump to work directory
+workdir() {
+    cd ~/work/projects
+}
+
+#######################################
+# 8. Custom Plugin Loader (Optional)
+#######################################
+
+if [ -d "$HOME/.zsh_plugins" ]; then
+  for plugin in $HOME/.zsh_plugins/*.zsh; do
+    source "$plugin"
+  done
+fi
+```
+
+[back to content](#contents)
+
+#### `/Users/nd20983/.zprofile`
+
+```
+```
+
+[back to content](#contents)
+
+### ssh configs
+
+#### `/Users/nd20983/.ssh/config`
+
+```
+Host bc4
+	Hostname=bc4login2.acrc.bris.ac.uk
+	User=nd20983
+	IdentityFile=~/.ssh/id_ed25519
+	ForwardX11=yes
+	ForwardX11Trusted=yes
+
+Host eocene
+	Hostname=eocene.ggy.bris.ac.uk
+	User=nd20983
+	IdentityFile=~/.ssh/id_rsa
+	PubkeyAcceptedAlgorithms=+ssh-rsa
+	HostkeyAlgorithms=+ssh-rsa
+	ForwardX11=yes
+	ForwardX11Trusted=yes
 ```
 
 [back to content](#contents)
